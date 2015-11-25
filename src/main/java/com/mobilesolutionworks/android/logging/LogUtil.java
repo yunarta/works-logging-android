@@ -133,7 +133,7 @@ public class LogUtil
         @Override
         public boolean isLoggable(LogRecord record)
         {
-            return Integer.compare(getLevel().intValue(), record.getLevel().intValue()) >= 0;
+            return true; // Integer.compare(getLevel().intValue(), record.getLevel().intValue()) >= 0;
         }
 
         @Override
@@ -151,7 +151,7 @@ public class LogUtil
                 return;
             }
 
-            if (Integer.compare(getLevel().intValue(), record.getLevel().intValue()) >= 0)
+//            if (Integer.compare(getLevel().intValue(), record.getLevel().intValue()) >= 0)
             {
                 StringBuilder sb = new StringBuilder();
                 if (mHasPrefix)
