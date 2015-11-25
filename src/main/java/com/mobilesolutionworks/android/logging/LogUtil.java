@@ -44,8 +44,8 @@ public class LogUtil
 
         if (identifier != 0)
         {
-            XmlResourceParser xml = resources.getXml(identifier);
-            boolean parsing = true;
+            XmlResourceParser xml     = resources.getXml(identifier);
+            boolean           parsing = true;
             try
             {
                 while (parsing)
@@ -68,11 +68,11 @@ public class LogUtil
                                 {
                                     String packageName = xml.getAttributeValue(null, "name");
 
-                                    boolean shorten = xml.getAttributeBooleanValue(null, "shortName", false);
+                                    boolean shorten     = xml.getAttributeBooleanValue(null, "shortName", false);
                                     boolean printThread = xml.getAttributeBooleanValue(null, "printThread", false);
-                                    String prefix = xml.getAttributeValue(null, "prefix");
+                                    String  prefix      = xml.getAttributeValue(null, "prefix");
 
-                                    Logger logger;
+                                    Logger    logger;
                                     Handler[] handlers;
 
                                     logger = Logger.getLogger(packageName);
@@ -159,6 +159,7 @@ public class LogUtil
                     sb.append(mPrefix);
                 }
 
+                sb.append(" - ");
                 if (mPrintThread)
                 {
                     sb.append(Thread.currentThread().toString());
@@ -170,7 +171,6 @@ public class LogUtil
                     name = name.substring(name.lastIndexOf(".") + 1);
                 }
 
-                sb.append(" - ");
                 sb.append(record.getMessage());
 
                 String message = sb.toString();
