@@ -40,6 +40,19 @@ public class LogUtil
 
     private static void doConfigure(Context context, int identifier)
     {
+        File dir    = context.getFilesDir();
+
+        File logDir = new File(dir, "logs");
+        logDir.mkdirs();
+
+        File[] files = logDir.listFiles();
+        for (File file : files)
+        {
+            if (file.getName().endsWith(".lck")) {
+                file.delete();
+            }
+        }
+
         Resources resources = context.getResources();
         LogConfig logConfig = null;
 
@@ -114,11 +127,6 @@ public class LogUtil
                                     String format = xml.getAttributeValue(null, "format");
                                     int    limit  = xml.getAttributeIntValue(null, "limit", 1024);
                                     int    count  = xml.getAttributeIntValue(null, "count", 5);
-
-                                    File dir    = context.getFilesDir();
-                                    File logDir = new File(dir, "logs");
-                                    logDir.mkdirs();
-
 
                                     String pattern = logDir.getAbsolutePath() + "/" + file;
                                     logger = Logger.getLogger(logConfig.name);
