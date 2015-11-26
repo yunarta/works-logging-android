@@ -15,7 +15,7 @@ repositories {
 apply plugin: 'java'
 
 group 'com.mobilesolutionworks'
-version '1.0.3'
+version '1.0.4'
 
 apply from: 'https://raw.githubusercontent.com/yunarta/works-gradle-script/master/publish-works.gradle'
 worksPublish {
