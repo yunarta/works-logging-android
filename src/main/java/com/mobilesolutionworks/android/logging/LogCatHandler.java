@@ -94,6 +94,7 @@ class LogCatHandler extends Handler
             {
                 Log.d(name, message, record.getThrown());
             }
+            System.out.println(name + " " + message);
         }
     }
 

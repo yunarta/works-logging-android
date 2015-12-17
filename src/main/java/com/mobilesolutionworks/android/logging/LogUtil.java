@@ -18,6 +18,8 @@ import java.util.logging.Logger;
  */
 public class LogUtil
 {
+    public static Class<? extends LogHandler> sDefaultHandler;
+
     public static Logger getLogger(Class cl)
     {
         return Logger.getLogger(cl.getName());
@@ -38,9 +40,14 @@ public class LogUtil
         doConfigure(context, context.getResources().getIdentifier("logutil", "xml", context.getPackageName()));
     }
 
+    public static void setDefaultLogger(Class<? extends LogHandler> handler)
+    {
+        sDefaultHandler = handler;
+    }
+
     private static void doConfigure(Context context, int identifier)
     {
-        File dir    = context.getFilesDir();
+        File dir = context.getFilesDir();
 
         File logDir = new File(dir, "logs");
         logDir.mkdirs();
@@ -48,7 +55,8 @@ public class LogUtil
         File[] files = logDir.listFiles();
         for (File file : files)
         {
-            if (file.getName().endsWith(".lck")) {
+            if (file.getName().endsWith(".lck"))
+            {
                 file.delete();
             }
         }
@@ -96,20 +104,24 @@ public class LogUtil
                                     handlers = logger.getHandlers();
                                     for (Handler h : handlers)
                                     {
-                                        if (h instanceof LogCatHandler)
+                                        if (sDefaultHandler != null && h.getClass().isAssignableFrom(sDefaultHandler))
                                         {
                                             logger.removeHandler(h);
                                         }
                                     }
 
+                                    LogHandler handler;
 
-                                    LogCatHandler handler = new LogCatHandler(prefix, shorten, printThread);
-                                    handler.setLevel(level);
+                                    if (sDefaultHandler != null)
+                                    {
+                                        handler = sDefaultHandler.newInstance();
+                                        handler.setup(prefix, shorten, printThread);
 
-                                    logger.addHandler(handler);
-                                    logger.setLevel(level);
+                                        handler.setLevel(level);
 
-
+                                        logger.addHandler(handler);
+                                        logger.setLevel(level);
+                                    }
                                 }
                                 catch (Exception e)
                                 {

@@ -15,12 +15,12 @@ repositories {
 apply plugin: 'java'
 
 group 'com.mobilesolutionworks'
-version '1.0.4'
+version '1.0.5'
 
 apply from: 'https://raw.githubusercontent.com/yunarta/works-gradle-script/master/publish-works.gradle'
 worksPublish {
     bintray {
-        repo = 'snapshot'
+        repo = 'maven'
         name = group + ':' + 'works-logging'
     }
 
