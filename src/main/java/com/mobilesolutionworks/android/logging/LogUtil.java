@@ -30,6 +30,11 @@ public class LogUtil
         return Logger.getLogger(name);
     }
 
+    public static void setDefaultLogger(Class<? extends LogHandler> handler)
+    {
+        sDefaultHandler = handler;
+    }
+
     public static void configure(Context context, int id)
     {
         doConfigure(context, id);
@@ -38,11 +43,6 @@ public class LogUtil
     public static void configure(Context context)
     {
         doConfigure(context, context.getResources().getIdentifier("logutil", "xml", context.getPackageName()));
-    }
-
-    public static void setDefaultLogger(Class<? extends LogHandler> handler)
-    {
-        sDefaultHandler = handler;
     }
 
     private static void doConfigure(Context context, int identifier)
