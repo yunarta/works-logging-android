@@ -1,10 +1,16 @@
 buildscript {
     repositories {
         jcenter()
+        maven {
+            url 'http://dl.bintray.com/yunarta-kartawahyudi/maven'
+        }
+        maven {
+            url 'http://dl.bintray.com/yunarta-kartawahyudi/snapshot'
+        }
     }
     dependencies {
-        classpath "com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1"
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.3'
+        classpath 'com.mobilesolutionworks:works-jenkins-android-builder:1.0.0'
+        classpath 'com.mobilesolutionworks:works-bintray-publish:1.0.0'
     }
 }
 
@@ -13,11 +19,23 @@ repositories {
 }
 
 apply plugin: 'java'
+apply plugin: 'com.mobilesolutionworks.jenkins-configure'
+apply plugin: 'com.mobilesolutionworks.bintray-publish'
 
 group 'com.mobilesolutionworks'
-version '1.0.6'
+version '1.0.7'
 
-apply from: 'https://raw.githubusercontent.com/yunarta/works-gradle-script/master/publish-works.gradle'
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+configurations {
+    provided
+}
+
+dependencies {
+    provided 'com.google.android:android:4.0.1.2'
+}
+
 worksPublish {
     bintray {
         repo = 'maven'
@@ -34,17 +52,3 @@ worksPublish {
     gitUrl = 'https://github.com/yunarta/works-logging-android.git'
 
 }
-
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
-
-configurations{
-    provided
-    compile.extendsFrom provided
-}
-
-dependencies {
-    provided 'com.google.android:android:4.0.1.2'
-}
-
-apply from: 'https://raw.githubusercontent.com/yunarta/works-gradle-script/master/publish-bintray-for-java-lib-nojavadoc.gradle'
