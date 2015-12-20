@@ -23,13 +23,14 @@ apply plugin: 'com.mobilesolutionworks.jenkins-configure'
 apply plugin: 'com.mobilesolutionworks.bintray-publish'
 
 group 'com.mobilesolutionworks'
-version jenkins.version('1.0.8')
+version jenkins.version('1.1.0')
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
 configurations {
     provided
+    compile.extendsFrom provided
 }
 
 dependencies {
@@ -50,5 +51,4 @@ worksPublish {
 
     siteUrl = 'https://github.com/yunarta/works-logging-android'
     gitUrl = 'https://github.com/yunarta/works-logging-android.git'
-
 }
